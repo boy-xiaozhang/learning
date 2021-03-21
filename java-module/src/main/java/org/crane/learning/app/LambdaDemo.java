@@ -1,6 +1,7 @@
 package org.crane.learning.app;
 
 
+import com.sun.scenario.effect.impl.sw.sse.SSEBlend_SRC_OUTPeer;
 import org.crane.learning.bean.Employee;
 import org.junit.Test;
 
@@ -168,5 +169,42 @@ public class LambdaDemo {
         System.out.println(integer);
     }
 
+    @Test
+    public void printHelloWorld() {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                System.out.println("HelloWorld");
+            }
+        }).start();
+    }
 
+    @Test
+    public void lambdaHelloWorld() {
+        new Thread(() -> System.out.println("Hello World")).start();
+    }
+
+    @FunctionalInterface
+    interface Calculator<T> {
+        T operation(T t1, T t2);
+    }
+
+    private <T> T add(T t1, T t2,Calculator<T> calculator) {
+        return calculator.operation(t1,t2);
+    }
+
+    @Test
+    public void lambdaStudy(){
+        Integer add = this.add(1, 2, (v1, v2) -> v1 + v2);
+        System.out.println(add);
+    }
+
+    public void print(Consumer<String> msg){
+        msg.accept("6666");
+    }
+
+    @Test
+    public void test104(){
+        print(System.out::println);
+    }
 }
